@@ -5,7 +5,7 @@ import { PlayerStatus } from "./player-status";
 import { CombatScreen } from "./combat-screen";
 import { GameOver } from "./game-over";
 import { Dice } from "./dice";
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { InventoryModal } from "./inventory-modal";
 import { Modal } from "./modal";
 
@@ -31,18 +31,44 @@ export default function RPGBoardGame() {
   } = useGameLogic();
 
   const [isInventoryOpen, setIsInventoryOpen] = useState(false);
+  const [previousGameState, setPreviousGameState] = useState<string | null>(
+    null
+  );
+
+  // Effet pour fermer le modal d'inventaire et suivre les transitions d'état
+  useEffect(() => {
+    // Fermer le modal d'inventaire lorsqu'on quitte les états de combat
+    if (
+      gameState !== "combat" &&
+      gameState !== "playerAttack" &&
+      gameState !== "enemyAttack" &&
+      gameState !== "playerUseItem"
+    ) {
+      setIsInventoryOpen(false);
+    }
+
+    // Suivre la transition d'état pour gérer le modal de combat
+    if (previousGameState === "combat" && gameState === "playing") {
+      // Force la fermeture du modal si on passe de combat à playing
+      closeModal();
+    }
+
+    // Mettre à jour l'état précédent pour le prochain cycle
+    setPreviousGameState(gameState);
+  }, [gameState, closeModal]);
 
   // Écran de sélection du personnage
   if (gameState === "characterSelection") {
     return <CharacterSelection onSelectCharacter={selectCharacter} />;
   }
 
-  // Écran de combat
+  // Écran de combat - seulement si un ennemi existe
   if (
-    gameState === "combat" ||
-    gameState === "playerAttack" ||
-    gameState === "enemyAttack" ||
-    gameState === "playerUseItem"
+    enemy && // Ajout de cette vérification pour ne jamais afficher l'écran de combat sans ennemi
+    (gameState === "combat" ||
+      gameState === "playerAttack" ||
+      gameState === "enemyAttack" ||
+      gameState === "playerUseItem")
   ) {
     return (
       <CombatScreen

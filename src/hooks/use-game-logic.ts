@@ -479,15 +479,23 @@ export const useGameLogic = () => {
 
             // Vérifier si l'ennemi est vaincu
             if (newEnemyHealth <= 0) {
+              const enemyType = enemy.type;
+
               setTimeout(() => {
                 setAnimationState({
                   ...animationState,
                   isPlayerAttacking: false,
+                  isEnemyAttacking: false,
                 });
-                setMessage(`Vous avez vaincu le ${enemy.type} !`);
-                setGameState("playing");
-                return;
-              }, COMBAT_ATTACK_DELAY);
+                setMessage(`Vous avez vaincu le ${enemyType} !`);
+                setEnemy(null);
+
+                // Petit délai supplémentaire pour que React mette bien à jour l'état enemy avant de changer de page
+                setTimeout(() => {
+                  setGameState("playing");
+                }, 50);
+              }, COMBAT_ATTACK_DELAY / 2);
+              return;
             } else {
               // Passer à l'attaque de l'ennemi
               setTimeout(() => {
@@ -686,9 +694,24 @@ export const useGameLogic = () => {
       });
 
       if (newEnemyHealth <= 0) {
+        const enemyType = enemy.type; // Sauvegarde du type d'ennemi avant de le mettre à null
+
+        // Mettre à jour l'UI immédiatement
+        setAnimationState({
+          ...animationState,
+          isPlayerAttacking: false,
+          isEnemyAttacking: false,
+        });
+
+        // Utiliser une seule mise à jour d'état batch pour plus de cohérence
         setTimeout(() => {
-          setMessage(`Vous avez vaincu le ${enemy.type} !`);
-          setGameState("playing");
+          setMessage(`Vous avez vaincu le ${enemyType} !`);
+          setEnemy(null); // Important: mettre à null avant de changer l'état du jeu
+
+          // Petit délai supplémentaire pour que React mette bien à jour l'état enemy avant de changer de page
+          setTimeout(() => {
+            setGameState("playing");
+          }, 50);
         }, COMBAT_ATTACK_DELAY / 2);
         return;
       }

@@ -41,6 +41,14 @@ export const CombatScreen: React.FC<CombatScreenProps> = ({
     }
   }, [message]);
 
+  // S'assurer que le modal d'inventaire est fermé lors des transitions d'état
+  useEffect(() => {
+    return () => {
+      // Ferme le modal lorsque le composant est démonté (combat terminé)
+      setIsInventoryOpen(false);
+    };
+  }, []);
+
   const getEnemyDescription = (enemyType: string) => {
     return (
       ENEMY_DESCRIPTIONS[enemyType as keyof typeof ENEMY_DESCRIPTIONS]
