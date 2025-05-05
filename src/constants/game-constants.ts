@@ -7,24 +7,27 @@ export const TILE_TYPES = {
   TRAP: "trap",
   TELEPORT: "teleport",
   EMPTY: "empty",
-}
+};
 
 // Types d'objets à gagner
-export const ITEM_TYPES = ["potion", "sword", "shield", "amulet", "scroll"]
+export const ITEM_TYPES = ["potion", "sword", "shield", "amulet", "scroll"];
 
 // Descriptions des cases
 export const TILE_DESCRIPTIONS = {
-  [TILE_TYPES.START]: "Case de départ et d'arrivée. Terminez le tour complet pour gagner !",
-  [TILE_TYPES.ITEM]: "Case d'objet. Vous y trouverez un équipement qui pourra vous aider.",
+  [TILE_TYPES.START]:
+    "Case de départ et d'arrivée. Terminez le tour complet pour gagner !",
+  [TILE_TYPES.ITEM]:
+    "Case d'objet. Vous y trouverez un équipement qui pourra vous aider.",
   [TILE_TYPES.ENEMY]: "Case d'ennemi. Préparez-vous au combat !",
   [TILE_TYPES.HEAL]: "Case de soin. Vous récupérez des points de vie.",
   [TILE_TYPES.TRAP]: "Case piège. Attention aux dégâts !",
-  [TILE_TYPES.TELEPORT]: "Case de téléportation. Vous serez transporté à un autre endroit du plateau.",
+  [TILE_TYPES.TELEPORT]:
+    "Case de téléportation. Vous serez transporté à un autre endroit du plateau.",
   [TILE_TYPES.EMPTY]: "Case vide. Il ne se passe rien ici.",
-}
+};
 
 // Types d'ennemis
-export const ENEMY_TYPES = ["goblin", "skeleton", "ghost", "dragon", "witch"]
+export const ENEMY_TYPES = ["goblin", "skeleton", "ghost", "dragon", "witch"];
 
 // Descriptions des ennemis
 export const ENEMY_DESCRIPTIONS = {
@@ -40,7 +43,8 @@ export const ENEMY_DESCRIPTIONS = {
   },
   ghost: {
     name: "Fantôme",
-    description: "Un esprit qui peut traverser les murs et est quasi-invulnérable aux attaques physiques.",
+    description:
+      "Un esprit qui peut traverser les murs et est quasi-invulnérable aux attaques physiques.",
     weakness: "magic",
   },
   dragon: {
@@ -53,7 +57,7 @@ export const ENEMY_DESCRIPTIONS = {
     description: "Une magicienne qui lance des sortilèges dangereux.",
     weakness: "physical",
   },
-}
+};
 
 // Couleurs pour les différentes cases
 export const TILE_COLORS = {
@@ -64,7 +68,7 @@ export const TILE_COLORS = {
   [TILE_TYPES.TRAP]: "bg-purple-500",
   [TILE_TYPES.TELEPORT]: "bg-indigo-500",
   [TILE_TYPES.EMPTY]: "bg-gray-300",
-}
+};
 
 // Types de personnages
 export const CHARACTER_TYPES = [
@@ -96,7 +100,7 @@ export const CHARACTER_TYPES = [
     baseDamage: 12,
     lifeStealRatio: 0.3,
   },
-]
+];
 
 // Définition des objets du jeu
 export const GAME_ITEMS = {
@@ -130,7 +134,8 @@ export const GAME_ITEMS = {
     id: "rustyDagger",
     name: "Dague rouillée",
     type: "sword",
-    description: "Une dague qui inflige +10 de dégâts. Peut être utilisée 3 fois.",
+    description:
+      "Une dague qui inflige +10 de dégâts. Peut être utilisée 3 fois.",
     effect: {
       type: "damage",
       value: 10,
@@ -143,7 +148,8 @@ export const GAME_ITEMS = {
     id: "enchantedSword",
     name: "Épée enchantée",
     type: "sword",
-    description: "Une épée qui inflige +15 de dégâts. Peut être utilisée 5 fois.",
+    description:
+      "Une épée qui inflige +15 de dégâts. Peut être utilisée 5 fois.",
     effect: {
       type: "damage",
       value: 15,
@@ -169,7 +175,8 @@ export const GAME_ITEMS = {
     id: "luckyAmulet",
     name: "Amulette de chance",
     type: "amulet",
-    description: "Augmente vos chances de trouver des objets rares. Effet passif.",
+    description:
+      "Augmente vos chances de trouver des objets rares. Effet passif.",
     effect: {
       type: "special",
       value: 0,
@@ -181,7 +188,8 @@ export const GAME_ITEMS = {
     id: "fireScroll",
     name: "Parchemin de feu",
     type: "scroll",
-    description: "Lance une boule de feu qui inflige 25 points de dégâts. Usage unique.",
+    description:
+      "Lance une boule de feu qui inflige 25 points de dégâts. Usage unique.",
     effect: {
       type: "damage",
       value: 25,
@@ -190,18 +198,18 @@ export const GAME_ITEMS = {
     usableInCombat: true,
     icon: "📜",
   },
-}
+};
 
 // Fonction pour obtenir un objet aléatoire
 export const getRandomItem = () => {
-  const items = Object.values(GAME_ITEMS)
-  const randomIndex = Math.floor(Math.random() * items.length)
-  const item = { ...items[randomIndex] }
+  const items = Object.values(GAME_ITEMS);
+  const randomIndex = Math.floor(Math.random() * items.length);
+  const item = { ...items[randomIndex] };
 
   // Initialiser le nombre d'utilisations actuelles
   if (item.effect.uses) {
-    item.effect.currentUses = item.effect.uses
+    item.effect.currentUses = item.effect.uses;
   }
 
-  return item
-}
+  return item;
+};

@@ -26,7 +26,7 @@ export const CharacterSelection: React.FC<CharacterSelectionProps> = ({
               className={`flex flex-col items-center p-4 border rounded-lg hover:bg-${character.color}-100`}
             >
               <div
-                className={`w-16 h-16 rounded-full bg-${character.color}-600 mb-2 flex items-center justify-center text-white text-2xl`}
+                className={`w-16 h-16 rounded-full bg-${character.color}-500 mb-2 flex items-center justify-center text-white text-2xl`}
               >
                 {character.name[0]}
               </div>
